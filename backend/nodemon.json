@@ -1,0 +1,6 @@
+{
+  "watch": ["server.ts", "storage"],
+  "ext": ".ts, .json",
+  "ignore": ["storage/**/*test.ts", "dist", ".resfile"],
+  "exec": "tsc && node ./dist/server.js"
+}
