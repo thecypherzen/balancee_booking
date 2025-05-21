@@ -1,0 +1,10 @@
+{
+  "users": [],
+  "stations": [
+    {
+      "id": 1,
+      "name": "Station 1",
+      "services": ["Alignment"]
+    }
+  ]
+}

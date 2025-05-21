@@ -1,12 +1,9 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import storage from "@/storage/fileStorage.js";
+import storage from "./storage/fileStorage.js";
 
 const port = 8082;
 const app = express();
-const data = storage.data;
-
-console.log(data);
 
 // routes
 app.use(cors({ origin: "http://0.0.0.0:5002", credentials: true }));
