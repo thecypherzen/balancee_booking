@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,6 +9,8 @@ import { ServiceOptions } from "@/components/FilterOptions";
 import { ChevronDown } from "lucide-react";
 
 const Filters = () => {
+  const [services, setServices] = useState<string[]>([]);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -19,7 +22,7 @@ const Filters = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-h-[50svh] overflow-y-scroll">
-        <ServiceOptions />
+        <ServiceOptions services={services} setServices={setServices} />
       </PopoverContent>
     </Popover>
   );
