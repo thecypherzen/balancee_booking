@@ -72,6 +72,12 @@ const CarTypes: React.FC<CarTypeProps> = ({ carType, setCarType }) => {
     "Coupe",
     "Convertible(Roadster)",
     "Minivan(MPV)",
+    "SUV",
+    "Pickup Truck",
+    "Limousine",
+    "Bus",
+    "Microcar",
+    "Motorhome",
   ];
 
   return (
@@ -106,4 +112,80 @@ const CarTypes: React.FC<CarTypeProps> = ({ carType, setCarType }) => {
   );
 };
 
-export { CarTypes, ServiceOptions };
+// Car Makes
+type CarMakeProps = {
+  carMake: string;
+  setCarMake: React.Dispatch<React.SetStateAction<string>>;
+};
+const CarMake: React.FC<CarMakeProps> = ({ carMake, setCarMake }) => {
+  const carMakesList = [
+    "Toyota",
+    "Lexus",
+    "Daihatsu",
+    "Volkswagen",
+    "Audi",
+    "Porsche",
+    "Bentley",
+    "Bugatti",
+    "Skoda",
+    "Lamborghini",
+    "Hyundai",
+    "Kia",
+    "Genesis",
+    "Stellantis",
+    "Fiat",
+    "Jeep",
+    "Dodge",
+    "Peugeot",
+    "Citroën",
+    "Opel",
+    "Chevrolet",
+    "GMC",
+    "Buick",
+    "Ford",
+    "Acura",
+    "Nissan",
+    "Mitsubishi",
+    "BMW",
+    "Mini",
+    "Rolls-Royce",
+    "Mercedes-Benz",
+    "Smart",
+    "Tesla",
+    "Innoson",
+    "Nord",
+  ];
+
+  return (
+    <div className="flex flex-col items-center rounded-md text-primary/80 px-3">
+      <RadioGroup
+        className="gap-1 w-full"
+        value={carMake}
+        onValueChange={(newValue) => setCarMake(newValue)}
+      >
+        {carMakesList.map((carMake, key) => {
+          return (
+            <div
+              key={`car-make-${key + 1}`}
+              className="flex items-center justify-between w-full hover:bg-secondary rounded-sm p-2"
+            >
+              <label
+                htmlFor={`car-make-${key + 1}`}
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              >
+                {carMake}
+              </label>
+              <RadioGroupItem
+                id={`car-make-${key + 1}`}
+                className="cursor-pointer"
+                value={`${carMake}`}
+              />
+            </div>
+          );
+        })}
+      </RadioGroup>
+    </div>
+  );
+};
+
+export { CarMake, CarTypes, ServiceOptions };
