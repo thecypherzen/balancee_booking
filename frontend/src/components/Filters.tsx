@@ -14,6 +14,7 @@ const Filters = () => {
 
   return (
     <section id="filters" className="flex gap-x-4">
+      {/* Services */}
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">
@@ -29,6 +30,7 @@ const Filters = () => {
           <div className="h-10 w-full bg-gradient-to-t from-secondary to-transparent sticky bottom-0" />
         </PopoverContent>
       </Popover>
+      {/* Car types */}
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">

@@ -76,7 +76,11 @@ const CarTypes: React.FC<CarTypeProps> = ({ carType, setCarType }) => {
 
   return (
     <div className="flex flex-col items-center rounded-md text-primary/80 px-3">
-      <RadioGroup defaultValue="Sedan(Saloon)" className="gap-1 w-full">
+      <RadioGroup
+        className="gap-1 w-full"
+        value={carType}
+        onValueChange={(newValue) => setCarType(newValue)}
+      >
         {carTypesList.map((carType, key) => {
           return (
             <div
