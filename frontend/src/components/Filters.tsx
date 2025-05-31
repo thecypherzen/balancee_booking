@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import {
   Popover,
   PopoverContent,
@@ -7,11 +8,24 @@ import {
 } from "@/components/ui/popover";
 import { CarMake, CarTypes, ServiceOptions } from "@/components/FilterOptions";
 import { ChevronDown } from "lucide-react";
+import { useAppDispatch } from "@/state/hooks.js";
+import { setFilters } from "@/state/slices.js";
 
 const Filters = () => {
   const [services, setServices] = useState<string[]>([]);
   const [carType, setCarType] = useState<string>("Crossover(CUV)");
   const [carMake, setCarMake] = useState<string>("Toyota");
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      setFilters({
+        carType,
+        services,
+        carMake,
+      }),
+    );
+  }, [services, carType, carMake]);
 
   return (
     <section id="filters" className="flex gap-x-4">

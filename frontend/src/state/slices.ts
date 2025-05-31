@@ -17,9 +17,9 @@ type StationsState = {
   isLoading: boolean;
 };
 
-type StationsDataType = Record<string, any>[];
+type StationsDataType = Array<Record<string, any>>;
 
-// slice
+// Stations slice
 const stationsSlice = createSlice({
   name: "stations",
   initialState: {
@@ -37,15 +37,15 @@ const stationsSlice = createSlice({
     },
     setStations: (
       state: StationsState,
-      action: PayloadAction<Record<string, any>>,
+      action: PayloadAction<StationsDataType>,
     ) => {
-      state.stations = action.payload as StationsDataType;
+      state.stations = [action.payload];
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getStations.fulfilled, (state: StationsState, { payload }) => {
-        state.stations = payload as Record<string, any>[];
+        state.stations = payload;
         state.isLoading = false;
       })
       .addCase(getStations.pending, (state: StationsState) => {
@@ -53,7 +53,8 @@ const stationsSlice = createSlice({
       })
       .addCase(getStations.rejected, (state: StationsState, { payload }) => {
         state.stations = null;
-        state.error = payload;
+        state.error =
+          payload?.error?.response?.data?.error ?? payload?.toString();
         state.isLoading = false;
       });
   },
@@ -64,20 +65,18 @@ const stationsSlice = createSlice({
 const getStations = createAsyncThunk<
   Record<string, any>,
   StationsFilterType,
-  { rejectValue: Record<string, any>; dispatch: AppDispatch }
+  { rejectValue: Record<string, any> }
 >(
   "stations/filter",
-  async (filters: StationsFilterType, { rejectWithValue, dispatch }) => {
+  async (filters: StationsFilterType, { rejectWithValue }) => {
     const params = new URLSearchParams();
     filters.services.forEach((service) => params.append("services", service));
     params.append("carType", filters.carType);
     params.append("carMake", filters.carMake);
     try {
       const res = await api.get(`/stations?${params.toString()}`);
-      console.log(res);
-      dispatch(stationsSlice.actions.setStations(res?.data));
+      return res?.data?.data;
     } catch (err) {
-      console.log(err);
       return rejectWithValue({ error: err });
     }
   },
@@ -87,3 +86,4 @@ const stationsSliceReducer = stationsSlice.reducer;
 
 export { getStations, stationsSliceReducer };
 export const { setFilters } = stationsSlice.actions;
+export type { StationsFilterType };

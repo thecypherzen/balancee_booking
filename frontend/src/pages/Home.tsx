@@ -1,5 +1,6 @@
 import ContentWrapper from "@/components/ContentWrapper";
 import Filters from "@/components/Filters";
+import ServiceStations from "@/components/ServiceStations";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
         <section data-role="filters" className="relative">
           <ContentWrapper>
             <Filters />
+            <ServiceStations />
           </ContentWrapper>
         </section>
         <section data-role="search results"></section>
