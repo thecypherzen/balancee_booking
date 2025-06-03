@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "@/utils/api.js";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { AppDispatch } from "@/state/types.js";
 
 // types
 type StationsFilterType = {
@@ -12,7 +11,7 @@ type StationsFilterType = {
 
 type StationsState = {
   stations: StationsDataType | null;
-  error: any | null;
+  error: Record<string, any> | null;
   filters: StationsFilterType | null;
   isLoading: boolean;
 };
@@ -45,7 +44,7 @@ const stationsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getStations.fulfilled, (state: StationsState, { payload }) => {
-        state.stations = payload;
+        state.stations = payload as StationsDataType;
         state.isLoading = false;
       })
       .addCase(getStations.pending, (state: StationsState) => {
@@ -53,8 +52,7 @@ const stationsSlice = createSlice({
       })
       .addCase(getStations.rejected, (state: StationsState, { payload }) => {
         state.stations = null;
-        state.error =
-          payload?.error?.response?.data?.error ?? payload?.toString();
+        state.error = payload?.error as Record<string, any>;
         state.isLoading = false;
       });
   },
@@ -76,8 +74,15 @@ const getStations = createAsyncThunk<
     try {
       const res = await api.get(`/stations?${params.toString()}`);
       return res?.data?.data;
-    } catch (err) {
-      return rejectWithValue({ error: err });
+    } catch (err: any) {
+      console.log(err);
+      return rejectWithValue({
+        error: {
+          message:
+            err?.response?.data?.error ?? err?.message ?? "Some Error occured",
+          statusCode: err?.response?.statusCode ?? 500,
+        },
+      });
     }
   },
 );

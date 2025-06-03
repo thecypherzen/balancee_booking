@@ -11,7 +11,11 @@ import { ChevronDown } from "lucide-react";
 import { useAppDispatch } from "@/state/hooks.js";
 import { setFilters } from "@/state/slices.js";
 
-const Filters = () => {
+type FiltersProps = {
+  className: string;
+};
+
+const Filters: React.FC<FiltersProps> = ({ className }) => {
   const [services, setServices] = useState<string[]>([]);
   const [carType, setCarType] = useState<string>("Crossover(CUV)");
   const [carMake, setCarMake] = useState<string>("Toyota");
@@ -28,7 +32,10 @@ const Filters = () => {
   }, [services, carType, carMake]);
 
   return (
-    <section id="filters" className="flex gap-x-4">
+    <section
+      id="filters"
+      className={`flex gap-4 justify-center flex-wrap ${className}`}
+    >
       {/* Services */}
       <Popover>
         <PopoverTrigger asChild>
