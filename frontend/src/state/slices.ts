@@ -80,7 +80,7 @@ const getStations = createAsyncThunk<
         error: {
           message:
             err?.response?.data?.error ?? err?.message ?? "Some Error occured",
-          statusCode: err?.response?.statusCode ?? 500,
+          statusCode: err?.response?.status ?? 500,
         },
       });
     }
