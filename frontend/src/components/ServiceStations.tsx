@@ -3,7 +3,14 @@ import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { getStations } from "@/state/slices";
 import type { RootState } from "@/state/types";
 import type { StationsFilterType } from "@/state/slices";
-import { Ban } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Ban, ChevronDown } from "lucide-react";
 
 const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
@@ -13,16 +20,15 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const fetchStations = async (filters: StationsFilterType | null) => {
     if (filters) {
       try {
+        if (errorOccured) {
+          setErrorOccured(false);
+        }
         await dispatch(getStations(filters)).unwrap();
       } catch (err) {
         setErrorOccured(true);
       }
     }
   };
-
-  useEffect(() => {
-    console.log(stations.stations);
-  }, [stations.stations]);
 
   useEffect(() => {
     fetchStations(stations.filters);
@@ -49,12 +55,108 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   return (
     <section
       id="service stations"
-      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full border-1 border-zinc-300 ${className}`}
+      className={`grid grid-cols-1 md:grid-cols-2 gap-4 w-full ${className}`}
     >
-      <div className="min-h-[100px]  rounded-sm border-1 border-zinc-300"></div>
-      <div className="min-h-[100px]  rounded-sm border-1 border-zinc-300"></div>
-      <div className="min-h-[100px]  rounded-sm border-1 border-zinc-300"></div>
-      <div className="min-h-[100px]  rounded-sm border-1 border-zinc-300"></div>
+      {stations?.stations?.map((station: Record<string, any>) => {
+        console.log(station);
+        return (
+          <div
+            key={station.id}
+            className="min-h-[320px] rounded-sm grid shadow-md shadow-primary/5 pb-3 overflow-hidden relative"
+          >
+            <div className="absolute top-49 right-20 size-24 rounded-full z-10 flex flex-col items-center justify-center bg-white outline-2 outline-white outline-offset-5">
+              <p>Logo</p>
+            </div>
+            <div className="h-[240px] overflow-hidden">
+              <img
+                src={`${station?.images[0]?.main}`}
+                alt={`${station?.name}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-4 h-full">
+              <div>
+                {/* Heading */}
+                <div className="mb-5">
+                  <h4 className="font-bold text-xl mb-2">{station.name}</h4>
+                  <p className="text-neutral text-xs">
+                    {station.location.address}
+                  </p>
+                </div>
+                {/* Service Badges */}
+                <div className="flex flex-col gap-1 mb-5">
+                  <span className="text-xs font-semibold text-neutral mb-2">
+                    Services
+                  </span>
+                  <span className="flex gap-x-2 gap-y-1 flex-wrap">
+                    {station.services.map((service: string, key: number) => (
+                      <Badge
+                        variant="outline"
+                        className="text-neutral font-light"
+                        key={`service-${key + 1}}`}
+                      >
+                        {service}
+                      </Badge>
+                    ))}
+                  </span>
+                </div>
+                {/* Supported types and makes */}
+                <div className="flex gap-3  mt-3">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button className="text-sm">
+                        Supported car makes
+                        <span>
+                          <ChevronDown />
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="border-1 border-zinc-200 h-max-[50px] overflow-y-scroll p-4">
+                      {station.supported_car_makes.map(
+                        (make: string, key: number) => {
+                          return (
+                            <p
+                              key={`car-make-${key + 1}`}
+                              className="text-primary/80"
+                            >
+                              {make}
+                            </p>
+                          );
+                        },
+                      )}
+                    </PopoverContent>
+                  </Popover>
+
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button className="text-sm">
+                        Supported car types
+                        <span>
+                          <ChevronDown />{" "}
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="border-1 border-zinc-200 h-max-[50px] overflow-y-scroll p-4">
+                      {station.supported_car_types.map(
+                        (make: string, key: number) => {
+                          return (
+                            <p
+                              key={`car-type-${key + 1}`}
+                              className="text-primary/80"
+                            >
+                              {make}
+                            </p>
+                          );
+                        },
+                      )}
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </section>
   );
 };
