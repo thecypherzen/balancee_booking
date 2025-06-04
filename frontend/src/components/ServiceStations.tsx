@@ -11,11 +11,13 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Ban, ChevronDown } from "lucide-react";
+import BookStation from "@/components/BookStation";
 
 const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const stations = useAppSelector((store: RootState) => store.stations);
   const [errorOccured, setErrorOccured] = useState(false);
+  const mapsAPIKey = import.meta.env.VITE_GMAPS_API_KEY;
 
   const fetchStations = async (filters: StationsFilterType | null) => {
     if (filters) {
@@ -62,9 +64,9 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
         return (
           <div
             key={station.id}
-            className="min-h-[320px] rounded-sm grid shadow-md shadow-primary/5 pb-3 overflow-hidden relative"
+            className="min-h-[320px] rounded-sm grid shadow-md shadow-primary/5 pb-3 overflow-hidden relative bg-white"
           >
-            <div className="absolute top-49 right-20 size-24 rounded-full z-10 flex flex-col items-center justify-center bg-white outline-2 outline-white outline-offset-5">
+            <div className="absolute top-50 right-8 size-20 lg:top-49 lg:right-14 lg:size-26 rounded-full z-10 flex flex-col items-center justify-center bg-secondary outline-2 outline-secondary outline-offset-5">
               <p>Logo</p>
             </div>
             <div className="h-[240px] overflow-hidden">
@@ -78,7 +80,9 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
               <div>
                 {/* Heading */}
                 <div className="mb-5">
-                  <h4 className="font-bold text-xl mb-2">{station.name}</h4>
+                  <h4 className="font-bold text-2xl mb-2 max-w-3/5 md:max-w-7/10 text-pretty">
+                    {station.name}
+                  </h4>
                   <p className="text-neutral text-xs">
                     {station.location.address}
                   </p>
@@ -101,17 +105,20 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                   </span>
                 </div>
                 {/* Supported types and makes */}
-                <div className="flex gap-3  mt-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
                   <Popover>
-                    <PopoverTrigger asChild>
-                      <Button className="text-sm">
-                        Supported car makes
+                    <PopoverTrigger asChild className="!text-wrap">
+                      <Button
+                        className="text-sm text-primary/90"
+                        variant="outline"
+                      >
+                        Supported Car makes
                         <span>
                           <ChevronDown />
                         </span>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="border-1 border-zinc-200 h-max-[50px] overflow-y-scroll p-4">
+                    <PopoverContent className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4">
                       {station.supported_car_makes.map(
                         (make: string, key: number) => {
                           return (
@@ -126,17 +133,19 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                       )}
                     </PopoverContent>
                   </Popover>
-
                   <Popover>
-                    <PopoverTrigger asChild>
-                      <Button className="text-sm">
-                        Supported car types
+                    <PopoverTrigger asChild className="!text-wrap">
+                      <Button
+                        className="text-sm text-primary/90"
+                        variant="outline"
+                      >
+                        Supported Car types
                         <span>
                           <ChevronDown />{" "}
                         </span>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="border-1 border-zinc-200 h-max-[50px] overflow-y-scroll p-4">
+                    <PopoverContent className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4">
                       {station.supported_car_types.map(
                         (make: string, key: number) => {
                           return (
@@ -151,6 +160,21 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                       )}
                     </PopoverContent>
                   </Popover>
+                </div>
+
+                {/* Book Now Button */}
+                <div className="mt-10">
+                  <BookStation />
+                </div>
+
+                {/* map */}
+                <div className="w-full mt-10 h-[300px] rounded-md overflow-hidden">
+                  <iframe
+                    src={`https://www.google.com/maps/embed/v1/place?key=${mapsAPIKey}&q=${station.location.latitude},${station.location.longitude}`}
+                    className="w-full h-full"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
                 </div>
               </div>
             </div>
