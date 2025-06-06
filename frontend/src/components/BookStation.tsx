@@ -82,7 +82,7 @@ const BookStation = () => {
     <Form {...BookingForm}>
       <form
         onSubmit={BookingForm.handleSubmit(FormOnSubmit)}
-        className="space-y-5"
+        className="space-y-5 w-full"
       >
         <FormField
           name="date"
@@ -90,17 +90,18 @@ const BookStation = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="mb-2 text-primary/60">
-                Pick a date{" "}
+                Select date
               </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       className={cn(
-                        "text-white/90 text-left justify-start w-auto !px-4 cursor-pointer",
+                        "text-primary/80 text-left flex justify-start !px-4 cursor-pointer w-full lg:w-4/5",
                         !field.value && "text-muted-foreground",
                       )}
                       disabled={isSubmitting}
+                      variant="outline"
                     >
                       <CalendarIcon />
                       {field.value ? (

@@ -162,9 +162,12 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                   </Popover>
                 </div>
 
-                {/* Book Now Button */}
+                {/* Book Now Form i*/}
                 <div className="mt-10">
-                  <BookStation />
+                  <div className="bg-secondary p-4 md:p-10 rounded-md flex flex-col gap-4 w-full items-start">
+                    <h4 className="text-lg font-bold">Book Appointment</h4>
+                    <BookStation />
+                  </div>
                 </div>
 
                 {/* map */}
