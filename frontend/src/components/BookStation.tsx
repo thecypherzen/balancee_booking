@@ -32,14 +32,16 @@ const FormSchema = z.object({
 
 // Book Station
 const BookStation = () => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const BookingForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   const FormOnSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast(`Success`, {
+    setIsSubmitting(true);
+    const toastId = toast.loading(`Processing...`, {
       duration: Infinity,
-      description: `${format(data.date, "PPPP")}`,
+      description: "Hold on while we submit your booking",
       action: {
         label: <CircleXIcon />,
         onClick: () => console.log("closed"),
@@ -48,20 +50,43 @@ const BookStation = () => {
         actionButton: "!bg-transparent !text-primary-foreground",
       },
     });
+
+    setTimeout(() => {
+      toast.success("Succcess", {
+        duration: 3000,
+        description: `Your booking for ${format(data.date, "PPPP")} was successful`,
+        id: toastId,
+        action: {
+          label: <CircleXIcon />,
+          onClick: () => console.log("closed"),
+        },
+        classNames: {
+          toast: "!bg-green-500 !text-white/90",
+          actionButton: "!bg-transparent !text-white/90",
+          description: "!text-white/90",
+        },
+      });
+    }, 5000);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 5100);
   };
 
   return (
     <Form {...BookingForm}>
       <form
         onSubmit={BookingForm.handleSubmit(FormOnSubmit)}
-        className="space-y-8"
+        className="space-y-5"
       >
         <FormField
           name="date"
           control={BookingForm.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Schedule an appointment </FormLabel>
+              <FormLabel className="mb-2 text-primary/60">
+                Pick a date{" "}
+              </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -70,6 +95,7 @@ const BookStation = () => {
                         "text-white/90 text-left justify-start w-auto !px-4 cursor-pointer",
                         !field.value && "text-muted-foreground",
                       )}
+                      disabled={isSubmitting}
                     >
                       <CalendarIcon />
                       {field.value ? (
@@ -93,7 +119,11 @@ const BookStation = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className={`cursor-pointer`}>
+        <Button
+          type="submit"
+          className={`cursor-pointer`}
+          disabled={isSubmitting}
+        >
           Submit
         </Button>
       </form>
