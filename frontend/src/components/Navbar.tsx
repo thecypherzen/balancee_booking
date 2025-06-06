@@ -22,9 +22,11 @@ const Navbar = () => {
   }, [handleScroll]);
   return (
     <div
-      className={`transition-all duration-500 container py-3 shadow-md shadow-primary/5 ${isSticky ? "sticky top-0 z-20 bg-zinc-800 text-secondary shadow-none" : ""}`}
+      className={`transition-all duration-500 py-4 shadow-md shadow-primary/5 ${isSticky ? "sticky top-0 z-20 bg-zinc-800 text-secondary shadow-none" : ""}`}
     >
-      <ContentWrapper>Nabar</ContentWrapper>
+      <ContentWrapper className="flex items-center justify-center">
+        Nabar
+      </ContentWrapper>
     </div>
   );
 };
