@@ -115,7 +115,9 @@ const BookStation = () => {
                   <Calendar
                     selected={field.value}
                     onSelect={field.onChange}
+                    disabled={(date) => date < new Date()}
                     mode="single"
+                    className="[&_td>button]:hover:cursor-pointer"
                     initialFocus
                   />
                 </PopoverContent>
