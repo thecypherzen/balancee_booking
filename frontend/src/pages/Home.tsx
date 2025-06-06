@@ -1,11 +1,13 @@
 import ContentWrapper from "@/components/ContentWrapper";
 import Filters from "@/components/Filters";
 import ServiceStations from "@/components/ServiceStations";
+import { Toaster } from "@/components/ui/sonner";
 
 const Home = () => {
   return (
     <>
       <section className="py-6">
+        <Toaster position="top-center" theme="dark" />
         <ContentWrapper>
           <section
             data-role="heading"
