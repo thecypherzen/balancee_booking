@@ -37,8 +37,11 @@ const BookStation = () => {
     resolver: zodResolver(FormSchema),
   });
 
+  // form submit handler
   const FormOnSubmit = (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
+
+    // toast default state
     const toastId = toast.loading(`Processing...`, {
       duration: Infinity,
       description: "Hold on while we submit your booking",
@@ -51,6 +54,7 @@ const BookStation = () => {
       },
     });
 
+    // Modify toast on success
     setTimeout(() => {
       toast.success("Succcess", {
         duration: 3000,
@@ -68,6 +72,7 @@ const BookStation = () => {
       });
     }, 5000);
 
+    // enable form after processing success
     setTimeout(() => {
       setIsSubmitting(false);
     }, 5100);
