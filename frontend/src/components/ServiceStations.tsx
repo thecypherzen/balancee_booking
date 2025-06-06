@@ -12,11 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Ban, ChevronDown } from "lucide-react";
 import BookStation from "@/components/BookStation";
+import { StationSkeleton } from "@/components/Skeleton";
 
 const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const stations = useAppSelector((store: RootState) => store.stations);
   const [errorOccured, setErrorOccured] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const mapsAPIKey = import.meta.env.VITE_GMAPS_API_KEY;
 
   const fetchStations = async (filters: StationsFilterType | null) => {
@@ -31,6 +33,13 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
       }
     }
   };
+
+  useEffect(() => {
+    window.onload = () => {
+      setPageLoaded(true);
+      console.log("loaded");
+    };
+  }, []);
 
   useEffect(() => {
     fetchStations(stations.filters);
@@ -54,13 +63,23 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
       </div>
     );
   }
+
+  if (!pageLoaded) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <StationSkeleton />
+        <StationSkeleton />
+        <StationSkeleton />
+        <StationSkeleton />
+      </div>
+    );
+  }
   return (
     <section
       id="service stations"
       className={`grid grid-cols-1 md:grid-cols-2 gap-4 w-full ${className}`}
     >
       {stations?.stations?.map((station: Record<string, any>) => {
-        console.log(station);
         return (
           <div
             key={station.id}
