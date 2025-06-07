@@ -201,7 +201,7 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                 </div>
 
                 {/* map */}
-                <div className="w-full mt-10 h-[300px] rounded-md overflow-hidden">
+                <div className="w-full mt-10 h-[300px] rounded-md overflow-hidden bg-secondary/8 dark:bg-zinc-900/80">
                   <iframe
                     src={`https://www.google.com/maps/embed/v1/place?key=${mapsAPIKey}&q=${station.location.latitude},${station.location.longitude}`}
                     className="w-full h-full"
