@@ -34,11 +34,11 @@ const ServiceOptions: React.FC<ServicesProps> = ({ services, setServices }) => {
         return (
           <div
             key={`service-${key + 1}`}
-            className="flex items-center justify-between w-full hover:bg-secondary rounded-sm p-2"
+            className="flex items-center justify-between w-full hover:bg-secondary dark:hover:bg-zinc-800 rounded-sm p-2"
           >
             <label
               htmlFor={`service-${key + 1}`}
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer dark:text-secondary/90"
             >
               {service}
             </label>
@@ -91,11 +91,11 @@ const CarTypes: React.FC<CarTypeProps> = ({ carType, setCarType }) => {
           return (
             <div
               key={`car-type-${key + 1}`}
-              className="flex items-center justify-between w-full hover:bg-secondary rounded-sm p-2"
+              className="flex items-center justify-between w-full hover:bg-secondary dark:hover:bg-zinc-800 rounded-sm p-2"
             >
               <label
                 htmlFor={`car-type-${key + 1}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer dark:text-secondary/90"
               >
                 {carType}
               </label>
@@ -167,11 +167,11 @@ const CarMake: React.FC<CarMakeProps> = ({ carMake, setCarMake }) => {
           return (
             <div
               key={`car-make-${key + 1}`}
-              className="flex items-center justify-between w-full hover:bg-secondary rounded-sm p-2"
+              className="flex items-center justify-between w-full hover:bg-secondary dark:hover:bg-zinc-800 rounded-sm p-2"
             >
               <label
                 htmlFor={`car-make-${key + 1}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer dark:text-secondary/80"
               >
                 {carMake}
               </label>

@@ -13,12 +13,15 @@ import { Button } from "@/components/ui/button";
 import { Ban, ChevronDown } from "lucide-react";
 import BookStation from "@/components/BookStation";
 import { StationSkeleton } from "@/components/Skeleton";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/ThemeContext";
 
 const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const stations = useAppSelector((store: RootState) => store.stations);
   const [errorOccured, setErrorOccured] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const { theme } = useTheme();
   const mapsAPIKey = import.meta.env.VITE_GMAPS_API_KEY;
 
   const fetchStations = async (filters: StationsFilterType | null) => {
@@ -83,10 +86,10 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
         return (
           <div
             key={station.id}
-            className="min-h-[320px] rounded-sm grid shadow-md shadow-primary/5 pb-3 overflow-hidden relative bg-white"
+            className="min-h-[320px] rounded-sm grid shadow-md shadow-primary/5 pb-3 overflow-hidden relative bg-white dark:bg-zinc-800"
           >
-            <div className="absolute top-50 right-8 size-20 lg:top-49 lg:right-14 lg:size-26 rounded-full z-10 flex flex-col items-center justify-center bg-secondary outline-2 outline-secondary outline-offset-5">
-              <p>Logo</p>
+            <div className="absolute top-50 right-8 size-20 lg:top-49 lg:right-14 lg:size-26 rounded-full z-10 flex flex-col items-center justify-center bg-secondary dark:bg-zinc-700 outline-2 outline-secondary dark:outline-zinc-700 outline-offset-5">
+              <p className="dark:text-secondary/50">Logo</p>
             </div>
             <div className="h-[240px] overflow-hidden">
               <img
@@ -99,23 +102,23 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
               <div>
                 {/* Heading */}
                 <div className="mb-5">
-                  <h4 className="font-bold text-2xl mb-2 max-w-3/5 md:max-w-7/10 text-pretty">
+                  <h4 className="font-bold text-2xl mb-2 max-w-3/5 md:max-w-7/10 text-pretty dark:text-white">
                     {station.name}
                   </h4>
-                  <p className="text-neutral text-xs">
+                  <p className="text-neutral dark:text-secondary/70 text-xs">
                     {station.location.address}
                   </p>
                 </div>
                 {/* Service Badges */}
                 <div className="flex flex-col gap-1 mb-5">
-                  <span className="text-xs font-semibold text-neutral mb-2">
+                  <span className="text-xs font-semibold text-neutral mb-2 dark:text-secondary">
                     Services
                   </span>
                   <span className="flex gap-x-2 gap-y-1 flex-wrap">
                     {station.services.map((service: string, key: number) => (
                       <Badge
                         variant="outline"
-                        className="text-neutral font-light"
+                        className="text-neutral font-light dark:bg-secondary/70 dark:text-primary/70 dark:font-normal dark:border-secondary/50"
                         key={`service-${key + 1}}`}
                       >
                         {service}
@@ -128,7 +131,7 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                   <Popover>
                     <PopoverTrigger asChild className="!text-wrap">
                       <Button
-                        className="text-sm text-primary/90"
+                        className="text-sm text-primary/90 dark:text-secondary/90 dark:hover:text-secondary/70 dark:hover:bg-zinc-800/80"
                         variant="outline"
                       >
                         Supported Car makes
@@ -137,13 +140,16 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                         </span>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4">
+                    <PopoverContent
+                      data-theme={theme}
+                      className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4 bg-white dark:bg-zinc-700 dark:text-white"
+                    >
                       {station.supported_car_makes.map(
                         (make: string, key: number) => {
                           return (
                             <p
                               key={`car-make-${key + 1}`}
-                              className="text-primary/80"
+                              className="p-1 rounded-sm text-primary/80 hover:bg-primary/15 dark:text-secondary/80 dark:hover:bg-zinc-800/80"
                             >
                               {make}
                             </p>
@@ -155,7 +161,7 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                   <Popover>
                     <PopoverTrigger asChild className="!text-wrap">
                       <Button
-                        className="text-sm text-primary/90"
+                        className="text-sm text-primary/90 dark:text-secondary/90 dark:hover:text-secondary/70 dark:hover:bg-zinc-800/80"
                         variant="outline"
                       >
                         Supported Car types
@@ -164,13 +170,16 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
                         </span>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4">
+                    <PopoverContent
+                      data-theme={theme}
+                      className="border-1 border-zinc-200 max-h-[120px] overflow-y-scroll p-4 bg-white dark:bg-zinc-700 dark:text-white"
+                    >
                       {station.supported_car_types.map(
                         (make: string, key: number) => {
                           return (
                             <p
                               key={`car-type-${key + 1}`}
-                              className="text-primary/80"
+                              className="p-1 rounded-sm text-primary/80 hover:bg-primary/15 dark:text-secondary/80 dark:hover:bg-zinc-800/80"
                             >
                               {make}
                             </p>
@@ -183,8 +192,10 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
 
                 {/* Book Now Form i*/}
                 <div className="mt-10">
-                  <div className="bg-secondary p-4 md:p-10 rounded-md flex flex-col gap-4 w-full items-start">
-                    <h4 className="text-lg font-bold">Book Appointment</h4>
+                  <div className="bg-secondary dark:bg-primary/90 p-4 md:p-10 rounded-md flex flex-col gap-4 w-full items-start">
+                    <h4 className="text-lg font-bold dark:text-secondary/80">
+                      Book Appointment
+                    </h4>
                     <BookStation />
                   </div>
                 </div>

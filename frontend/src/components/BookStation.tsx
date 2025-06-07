@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon, CircleXIcon } from "lucide-react";
 import { format } from "date-fns";
+import { useTheme } from "@/hooks/ThemeContext";
 
 // Form schema
 const FormSchema = z.object({
@@ -33,6 +34,7 @@ const FormSchema = z.object({
 // Book Station
 const BookStation = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { theme } = useTheme();
   const BookingForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -89,7 +91,7 @@ const BookStation = () => {
           control={BookingForm.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="mb-2 text-primary/60">
+              <FormLabel className="mb-2 text-primary/60 dark:text-secondary/80">
                 Select date
               </FormLabel>
               <Popover>
@@ -112,7 +114,11 @@ const BookStation = () => {
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent
+                  data-theme={theme}
+                  className="w-auto p-0 dark:bg-zinc-800"
+                  align="start"
+                >
                   <Calendar
                     selected={field.value}
                     onSelect={field.onChange}
@@ -129,7 +135,7 @@ const BookStation = () => {
         />
         <Button
           type="submit"
-          className={`cursor-pointer`}
+          className={`cursor-pointer dark:bg-secondary dark:text-primary dark:hover:bg-secondary/70 dark:hover:text-primary/80`}
           disabled={isSubmitting}
         >
           Submit

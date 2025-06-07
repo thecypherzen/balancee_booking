@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextType>({
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState(
-    window.localStorage.getItem("balance_theme") || "light",
+    window.localStorage.getItem("balancee_theme") || "light",
   );
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
