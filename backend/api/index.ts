@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.get("/status", (_: Request, res: Response) => {
+app.get("/", (_: Request, res: Response) => {
   res.json({
     status: "OK",
   });
