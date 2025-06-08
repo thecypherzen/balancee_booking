@@ -63,4 +63,8 @@ if (process.env.NODE_ENV !== "production") {
   app.listen(port, "0.0.0.0", () => {
     console.log("backend server up. Port:", port);
   });
+} else {
+  app.listen(port, () => {
+    console.log("production server up on port", port);
+  });
 }
