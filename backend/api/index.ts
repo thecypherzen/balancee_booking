@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import storage from "./storage/fileStorage.js";
+import storage from "./storage/fileStorage";
 import type { FiltersType } from "@/types";
 
 const port = 8082;
