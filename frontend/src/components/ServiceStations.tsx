@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { getStations } from "@/state/slices";
 import type { RootState } from "@/state/types";
-import type { StationsFilterType } from "@/state/slices";
+import type {
+  StationsDataType,
+  StationsFilterType,
+  StationsStateType,
+} from "@/state/slices";
 import { Badge } from "@/components/ui/badge";
 import {
   Popover,
@@ -13,12 +17,14 @@ import { Button } from "@/components/ui/button";
 import { Ban, ChevronDown } from "lucide-react";
 import BookStation from "@/components/BookStation";
 import { StationSkeleton } from "@/components/Skeleton";
-import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/ThemeContext";
 
 const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
-  const stations = useAppSelector((store: RootState) => store.stations);
+  const stationState: StationsStateType = useAppSelector(
+    (store: RootState) => store.stations,
+  );
+  const stations: StationsDataType | null = stationState.stations;
   const [errorOccured, setErrorOccured] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const { theme } = useTheme();
@@ -45,8 +51,8 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
   }, []);
 
   useEffect(() => {
-    fetchStations(stations.filters);
-  }, [stations.filters]);
+    fetchStations(stationState.filters);
+  }, [stationState.filters]);
 
   if (errorOccured) {
     return (
@@ -56,10 +62,12 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
         </span>
         <p className="font-semibold text-md mb-0">
           {" "}
-          {stations ? `${stations?.error?.message}.` : "Unexpected Error."}{" "}
+          {stationState.error
+            ? `${stationState.error.message}.`
+            : "Unexpected Error."}{" "}
         </p>
         <p className="text-sm">
-          {stations?.error?.statusCode === 404
+          {stationState?.error?.statusCode === 404
             ? "Modify your filter selections"
             : "Try again later"}
         </p>
@@ -82,7 +90,7 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
       id="service stations"
       className={`grid grid-cols-1 md:grid-cols-2 gap-4 w-full ${className}`}
     >
-      {stations?.stations?.map((station: Record<string, any>) => {
+      {stations?.map((station: Record<string, any>) => {
         return (
           <div
             key={station.id}

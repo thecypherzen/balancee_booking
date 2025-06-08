@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.get("/status", (_: Request, res: Response) => {
-  console.log("/status called");
   res.json({
     status: "OK",
   });

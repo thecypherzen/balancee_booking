@@ -9,14 +9,19 @@ type StationsFilterType = {
   carMake: string;
 };
 
-type StationsState = {
+type StationsStateType = {
   stations: StationsDataType | null;
-  error: Record<string, any> | null;
+  error: StateErrorType | null;
   filters: StationsFilterType | null;
   isLoading: boolean;
 };
 
 type StationsDataType = Array<Record<string, any>>;
+
+type StateErrorType = {
+  message: string;
+  [key: string]: any;
+};
 
 // Stations slice
 const stationsSlice = createSlice({
@@ -29,13 +34,13 @@ const stationsSlice = createSlice({
   },
   reducers: {
     setFilters: (
-      state: StationsState,
+      state: StationsStateType,
       action: PayloadAction<StationsFilterType>,
     ) => {
       state.filters = action.payload;
     },
     setStations: (
-      state: StationsState,
+      state: StationsStateType,
       action: PayloadAction<StationsDataType>,
     ) => {
       state.stations = [action.payload];
@@ -43,18 +48,24 @@ const stationsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getStations.fulfilled, (state: StationsState, { payload }) => {
-        state.stations = payload as StationsDataType;
-        state.isLoading = false;
-      })
-      .addCase(getStations.pending, (state: StationsState) => {
+      .addCase(
+        getStations.fulfilled,
+        (state: StationsStateType, { payload }) => {
+          state.stations = payload as StationsDataType;
+          state.isLoading = false;
+        },
+      )
+      .addCase(getStations.pending, (state: StationsStateType) => {
         state.isLoading = true;
       })
-      .addCase(getStations.rejected, (state: StationsState, { payload }) => {
-        state.stations = null;
-        state.error = payload?.error as Record<string, any>;
-        state.isLoading = false;
-      });
+      .addCase(
+        getStations.rejected,
+        (state: StationsStateType, { payload }) => {
+          state.stations = null;
+          state.error = payload?.error;
+          state.isLoading = false;
+        },
+      );
   },
 });
 
@@ -75,7 +86,6 @@ const getStations = createAsyncThunk<
       const res = await api.get(`/stations?${params.toString()}`);
       return res?.data?.data;
     } catch (err: any) {
-      console.log(err);
       return rejectWithValue({
         error: {
           message:
@@ -91,4 +101,9 @@ const stationsSliceReducer = stationsSlice.reducer;
 
 export { getStations, stationsSliceReducer };
 export const { setFilters } = stationsSlice.actions;
-export type { StationsFilterType };
+export type {
+  StationsDataType,
+  StateErrorType,
+  StationsFilterType,
+  StationsStateType,
+};
