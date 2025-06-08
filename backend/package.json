@@ -5,7 +5,6 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc && npm run copydb",
     "copydb": "cp src/storage/db.json dist/storage"
   },
   "author": "William Inyam",

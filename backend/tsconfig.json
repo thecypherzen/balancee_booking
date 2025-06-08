@@ -4,6 +4,7 @@
     "outDir": "dist",
     "rootDir": "./src",
     "noEmitOnError": true,
+    "noEmit": true,
     "checkJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
