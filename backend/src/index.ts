@@ -3,7 +3,7 @@ import cors from "cors";
 import storage from "./storage/fileStorage";
 import type { FiltersType } from "@/types";
 
-const port = process.env.PORT || 8082;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 8082;
 const app = express();
 
 // config
