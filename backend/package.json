@@ -2,10 +2,9 @@
   "name": "balancee-backend",
   "version": "1.0.0",
   "description": "simple backend server",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
-    "copydb": "cp src/storage/db.json dist/storage"
+    "dev": "nodemon"
   },
   "author": "William Inyam",
   "license": "ISC",

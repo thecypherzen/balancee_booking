@@ -10,7 +10,7 @@ class FileStorage {
   constructor(filepath?: string) {
     this.isReady = false;
     this.#data = null;
-    this.#path = filepath || path.resolve(__dirname, "db.json");
+    this.#path = filepath || path.resolve("./db.json");
   }
 
   async init() {

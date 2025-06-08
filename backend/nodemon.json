@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": ".ts, .json",
   "ignore": ["src/**/*test.ts", "dist", ".resfile"],
-  "exec": "tsc && cp src/storage/db.json dist/storage/ && node ./dist/server.js"
+  "exec": "tsc && node ./dist/index.js"
 }
