@@ -7,7 +7,16 @@ const port = 8082;
 const app = express();
 
 // config
-app.use(cors({ origin: "http://0.0.0.0:5002", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://0.0.0.0:5002",
+      "https://balancee-booking-brown.vercel.app/",
+    ],
+    methods: ["GET"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,7 +59,8 @@ app.all(/\/*/, (_: Request, res: Response) => {
   });
   return;
 });
-
-app.listen(port, "0.0.0.0", () => {
-  console.log("backend server up. Port:", port);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, "0.0.0.0", () => {
+    console.log("backend server up. Port:", port);
+  });
+}
