@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import storage from "./storage/fileStorage.js";
-import serverless from "serverless-http";
 import type { FiltersType } from "@/types";
 
 const port = 8082;
@@ -61,10 +60,8 @@ app.all(/\/*/, (_: Request, res: Response) => {
   return;
 });
 
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, "0.0.0.0", () => {
-    console.log("backend server up. Port:", port);
-  });
-}
+app.listen(port, "0.0.0.0", () => {
+  console.log("backend server up. Port:", port);
+});
 
-export default serverless(app);
+module.exports = app;

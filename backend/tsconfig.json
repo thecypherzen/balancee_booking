@@ -2,16 +2,16 @@
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "./src",
+    "rootDir": "./api",
     "noEmitOnError": true,
     "checkJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./api/*"]
     }
   },
-  "include": ["./src/**/*"],
+  "include": ["./api/**/*"],
   "exclude": ["node_modules", "dist", ".resfile"]
 }
