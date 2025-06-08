@@ -1,18 +1,8 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "./src",
-    "noEmitOnError": true,
-    "noEmit": true,
-    "checkJs": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules", "dist", ".resfile"]
+    "noEmit": true, // Prevent local compilation
+    "strict": true,
+    "esModuleInterop": true
+  }
 }
