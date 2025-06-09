@@ -84,8 +84,10 @@ const getStations = createAsyncThunk<
     params.append("carMake", filters.carMake);
     try {
       const res = await api.get(`/stations?${params.toString()}`);
+      console.log(res?.data);
       return res?.data?.data;
     } catch (err: any) {
+      console.log(err);
       return rejectWithValue({
         error: {
           message:
