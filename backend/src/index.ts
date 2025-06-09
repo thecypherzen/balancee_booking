@@ -40,6 +40,7 @@ app.get("/stations", async (req: Request, res: Response) => {
     carType: params.carType,
     carMake: params.carMake,
   } as FiltersType;
+  console.log(filters);
   try {
     const stations = await storage.filter("stations", filters);
     if (!stations.length) {

@@ -1,6 +1,6 @@
 {
-  "watch": ["api"],
+  "watch": ["src"],
   "ext": ".ts, .json",
-  "ignore": ["api/**/*test.ts", "dist", ".resfile"],
+  "ignore": ["src/**/*test.ts", "dist", ".resfile"],
   "exec": "tsc && node ./dist/index.js"
 }

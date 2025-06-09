@@ -79,9 +79,12 @@ class FileStorage {
     try {
       await this.awaitReady();
       const results = this.data ? this.data[field] : [];
-
       //filtering
-      if (Object.keys(filters).length === 0) {
+      if (
+        filters.services.length === 0 &&
+        !filters.carType &&
+        !filters.carMake
+      ) {
         return results;
       }
 
