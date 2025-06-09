@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: [
       "http://0.0.0.0:5002",
-      "https://balancee-booking-brown.vercel.app/",
+      "https://balancee-booking-brown.vercel.app",
     ],
     methods: ["GET"],
     credentials: true,
