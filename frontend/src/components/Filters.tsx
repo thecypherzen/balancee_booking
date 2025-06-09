@@ -18,8 +18,8 @@ type FiltersProps = {
 
 const Filters: React.FC<FiltersProps> = ({ className }) => {
   const [services, setServices] = useState<string[]>([]);
-  const [carType, setCarType] = useState<string>("Crossover(CUV)");
-  const [carMake, setCarMake] = useState<string>("Toyota");
+  const [carType, setCarType] = useState<string>("");
+  const [carMake, setCarMake] = useState<string>("");
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
 
