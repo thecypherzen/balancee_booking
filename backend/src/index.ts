@@ -40,7 +40,6 @@ app.get("/stations", async (req: Request, res: Response) => {
     carType: params.carType,
     carMake: params.carMake,
   } as FiltersType;
-  console.log(filters);
   try {
     const stations = await storage.filter("stations", filters);
     if (!stations.length) {
@@ -54,7 +53,6 @@ app.get("/stations", async (req: Request, res: Response) => {
 });
 
 app.all(/\/*/, (_: Request, res: Response) => {
-  console.log("404 handler called");
   res.status(404).json({
     error: "Not found",
   });
