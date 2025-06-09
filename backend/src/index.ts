@@ -60,8 +60,11 @@ app.all(/\/*/, (_: Request, res: Response) => {
   return;
 });
 
-app.listen(port, "0.0.0.0", () => {
+const server = app.listen(port, "0.0.0.0", () => {
   console.log("backend server up. Port:", port);
 });
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
 
 export default app;
