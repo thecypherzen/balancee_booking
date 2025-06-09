@@ -89,14 +89,21 @@ class FileStorage {
       }
 
       if (field === "stations") {
-        let stations = results.filter(
-          (station: StationType) =>
-            filters.services.every((service) =>
-              station.services.includes(service),
-            ) &&
-            station.supported_car_types.includes(filters.carType) &&
-            station.supported_car_makes.includes(filters.carMake),
+        let stations = results.filter((station: StationType) =>
+          filters.services.every((service) =>
+            station.services.includes(service),
+          ),
         );
+        if (filters.carType.length) {
+          stations = stations.filter((station: StationType) =>
+            station.supported_car_types.includes(filters.carType),
+          );
+        }
+        if (filters.carMake.length) {
+          stations = stations.filter((station: StationType) =>
+            station.supported_car_makes.includes(filters.carMake),
+          );
+        }
         return stations;
       }
       return results.users;
