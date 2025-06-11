@@ -37,18 +37,12 @@ const ServiceStations: React.FC<StationsType> = ({ className = "" }) => {
           setErrorOccured(false);
         }
         await dispatch(getStations(filters)).unwrap();
+        setPageLoaded(true);
       } catch (err) {
         setErrorOccured(true);
       }
     }
   };
-
-  useEffect(() => {
-    window.onload = () => {
-      setPageLoaded(true);
-      console.log("loaded");
-    };
-  }, []);
 
   useEffect(() => {
     fetchStations(stationState.filters);
