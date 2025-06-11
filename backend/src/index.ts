@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import axios from "axios";
 import storage from "./storage/fileStorage";
 import type { FiltersType } from "@/types";
 
@@ -65,5 +66,20 @@ const server = app.listen(port, "0.0.0.0", () => {
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
+
+const pingServer = () => {
+  const url =
+    process.env.NODE_ENV === "development"
+      ? `http://0.0.0.0:${port}`
+      : "https://balancee-booking.onrender.com";
+  axios
+    .get(url)
+    .then()
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+setInterval(pingServer, 300000);
 
 export default app;
